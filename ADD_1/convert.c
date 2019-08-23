@@ -32,7 +32,7 @@ int convert()
 	//	{
 			if(ch == ',')//&& count == 1)
 			{
-
+				fseek(fp1,1,SEEK_CUR);
 				printf("comma\n");
 	//			count = 0;
 				if(ct == 0)
@@ -49,8 +49,11 @@ int convert()
 				printf("fp1:%ld\n", ftell(fp1));
 				printf("fp:%ld\n", ftell(fp));
 				printf("d:%d\n",dist );
-				fread(buffer, dist, 1, fp);
-				dist = ftell(fp1) - ftell(fp) - 1;
+				
+				fread(buffer, dist-1, 1, fp);
+			
+				//dist = ftell(fp1) - ftell(fp) - 1;
+				printf("dlast:%d\n",dist );
 				printf("buffer: %s",buffer );
 				printf("\n");
 				if(strcmp(buffer, name) == 0)
