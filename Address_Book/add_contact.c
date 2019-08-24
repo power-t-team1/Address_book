@@ -2,7 +2,7 @@
 
 extern int flag;
 
-int add_contact(contact_info **contacts, int size)
+int add_contact(contact_info **contacts, int size, addressbook *book)
 {
 	//Declare the variables
 	int i;
@@ -23,7 +23,7 @@ int add_contact(contact_info **contacts, int size)
 		printf("Enter email address: ");
 		scanf("%s", buffer);
 		strcpy((*contacts)[i].email_addresses, buffer);
-		(*contacts)[i].sl_no = i;
+		(*contacts)[i].sl_no = ++(*book).count;
 	}
 	flag = 1;
 	return SUCCESS;

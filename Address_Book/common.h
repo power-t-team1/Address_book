@@ -44,10 +44,17 @@ typedef struct
 	contact_info *list;
 
 	int count;	
-} addressbook;
+}addressbook;
 
-int add_contact(contact_info **contacts, int size);
-int save_contact(addressbook *);
-int list_contact(addressbook *book);
+typedef struct node
+{
+	int address;
+	struct node *prev;
+	struct node *next;
+}Cursor;
 
+int add_contact(contact_info **contacts, int size, addressbook *);
+int save_contact(addressbook *, int);
+void list_contact(void);
+int insert_last(Cursor **head, Cursor **tail, int data);
 #endif

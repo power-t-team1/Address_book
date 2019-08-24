@@ -1,82 +1,112 @@
 #include "common.h"
 
-int list_contact(addressbook *book)
+void list_contact(void)
 {
-	//Declare the variables
-	int i, flag = 0;
+	//Declaring the variables
+	int i, flag;
 	char ch, choice;
-	FILE *f1, *f2, *f3, *f4;
-	f1 = f2 = f3 = f4 = book->fp;
+	FILE *fl = fopen("Address_book.csv", "r");
 
-	//Iterate till the end of the .csv file
-	while((*book).count)
+	//Validation
+	if (fl == NULL)
 	{
-		//Print only 5 contacts on the stdout
-		for (i = 0; i < 5 && (*book).count != '\0'; i++)
-		{
-			while((ch = fgetc(f4))!= '\n')
-			{
-				if (ch == ',')
-				{
-					continue;
-				}
-				else
-				{
-					putc(ch, stdout);
-				}
-			}
-			printf("\n");
-		}
-		flag++;
-		//Update the address of the page pointers
-		if (flag == 1)
-		{
-			f2 = f4;
-		}
-		else
-		{
-			f3 = f4;
-		}
+		perror("Address_book.csv");
+		return;
+	}
+	Cursor *head = NULL;
+	Cursor *tail = NULL;
+	//Inserting the start location to the node
+	insert_last(&head, &tail, ftell(fl));
 
+	//Print first 5 contacts on the stdout
+	printf("Address book: \n\n");
+	for (i = 0; i < 5; i++)
+	{
+		while((ch = fgetc(fl))!= '\n' && ch != EOF)
+		{
+			if (ch == ',')
+			{
+				continue;
+			}
+			else
+			{
+				putc(ch, stdout);
+			}
+		}
+		printf("\n");
+	}
+	printf("\n");
+	//Iterate till the end of the .csv file
+	while(1)
+	{
 		//Prompt if the previous or next page is to be displayed
-		printf("Press [ p | n ] for Previous or Next page: ");
+		printf("Press [p] for Previous page, [n] for Next page, [e] for exit: ");
 		scanf("\n%c", &choice);
+		flag = 1;
 		switch (choice)
 		{
 			case 'p':
-				if (flag == 2)
-				{
-					f4 = f1;
-					flag--;
-				}
-				else if(flag == 3)
-				{
-					f4 = f2;
-					flag--;
+				//Check and print data only if previous node is not NULL
+				if (tail->prev != NULL)
+				{	
+					Cursor *temp = tail;
+					tail = tail->prev;
+					tail->next = NULL;
+					free(temp);
 				}
 				else
 				{
-					printf("There is no previous page\n");
+					printf("There is no previous page\n\n");
+					flag = 0;
 				}
+				//Move the fl pointer to the location present in the node
+				fseek(fl, (tail->address), SEEK_SET);
 				break;
 
 			case 'n':
-				if (flag == 1)
+				//Save the location of the page into the node and print data only if the ch variable hasn't reached NULL character
+				if (ch != EOF)
 				{
-					f4 = f2;
-					flag--;
-				}
-				else if(flag == 2)
-				{
-					f4 = f3;
-					flag--;
+					insert_last(&head, &tail, ftell(fl));
 				}
 				else
 				{
-					printf("There is no next page\n");
+					printf("There is no next page\n\n");
+					flag = 0;
+
 				}
 				break;
+
+			case 'e':
+				return;
+
+			default: 
+				printf("Please select the correct option\n\n");
 		}
+		printf("\n");
+		//Print the page data only if flag is not zero
+		if (flag)
+		{
+			//Print only 5 contacts on the stdout
+			printf("Address book: \n\n");
+			for (i = 0; i < 5; i++)
+			{
+				while((ch = fgetc(fl))!= '\n' && ch != EOF)
+				{
+					if (ch == ',')
+					{
+						continue;
+					}
+					else
+					{
+						putc(ch, stdout);
+					}
+				}
+				printf("\n");
+			}
+			printf("\n");
+		}
+
 	}
 }
 

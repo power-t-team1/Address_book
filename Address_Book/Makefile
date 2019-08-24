@@ -5,7 +5,7 @@ Address_book: $(OBJ)
 	gcc -o $@ $^
 
 clean:
-	rm *.o *.exe
+	rm *.o 
 
 run:
 	make && ./Address_book
