@@ -4,7 +4,7 @@ int traversing_function()
 	FILE *fp1 = fopen("Address_book.csv", "r");
 	FILE *fp = fopen("Address_book.csv", "r");
 	FILE *ft = fopen("Address_book.csv", "r");
-
+	FILE *fd = fopen("dest1.txt", "w");
 	char ch;
 	//	ch = fgetc(fs);
 	int count = 1, dist;
@@ -52,18 +52,20 @@ int traversing_function()
 			fseek(fp,1,SEEK_CUR);
 		}
 	}*/
-	FILE *fd = fopen("dest1.txt", "w");
+	//ask for options
 	int option;
 	printf("Delete by \n1.Name\n2.Phone number\n3.Email\n4.Serial no\n");
 	scanf("%d", &option);
+
 	//Enter the key
 	char *key = malloc(33 * sizeof(char));
 	printf("Enter the key\n");
 	scanf("%s", key);
-fprintf(fd, "%s", key);
+	int tok = 1;
+	//fprintf(fd, "%s", key);
 	while((ch=fgetc(fp1)) != EOF)
 	{
-		fputc(ch,fd);
+		//fputc(ch,fd);
 		if (ch == '\n')
 		{
 			dist = ftell(fp1) - ftell(fp) - 1;
@@ -118,17 +120,35 @@ fprintf(fd, "%s", key);
 							flag = 1;
 						}
 						break;
-						default:
+					default:
 						printf("invalid option\n");
 				}
 				if(flag == 0)
 				{
 					printf("buff--->%s\n",buffer1);
 					printf("xyz\n");
-					fprintf(fd, "%s\n", key);
+					//fprintf(fd, "%s\n", buffer1);
+
+					//for(int i = 1; i < 4;i++)
+					{
+						//int tok = atoi(token4);
+						fprintf(fd, "%s,", token1);
+						fprintf(fd, "%s,", token2);
+						fprintf(fd, "%s,", token3);
+						fprintf(fd, "%d",  tok++);
+					}
+					fprintf(fd,"\n");
 					//fwrite(key, 1, dist, fd);
 					printf("yzv\n");
 				}
+				if(flag == 1)
+				{
+					printf("seeked\n");
+					//fseek(fp1,dist,SEEK_CUR);
+					flag = 0;
+				}
+
+
 
 		}
 	}
