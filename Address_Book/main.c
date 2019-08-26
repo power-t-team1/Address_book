@@ -35,7 +35,7 @@ int main()
 	while(1)
 	{
 		//Prompt + read the operation
-		printf("Select an option\n1.Add Contact\n2.Search Contact\n3.Edit Contact\n4.Delete Contact\n5.List Contacts\n6.Exit\n");
+		printf("\nSelect an option\n1.Add Contact\n2.Search Contact\n3.Edit Contact\n4.Delete Contact\n5.List Contacts\n6.Exit\n");
 		scanf("%d", &option);
 		switch(option)
 		{
@@ -70,11 +70,20 @@ int main()
 				break;
 
 			case 2:
+				{
+					int callcount = 0;
+					searchh(callcount);
+				}
 				break;
 			case 3:
+				{
+					editt();
+				}
 				break;
 			case 4:
-				traversing_function();
+				{
+					traversing_function();
+				}
 				break;
 			case 5:
 				if (flag == 0)

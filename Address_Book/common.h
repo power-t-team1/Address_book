@@ -58,4 +58,7 @@ int save_contact(addressbook *, int);
 void list_contact(void);
 int insert_last(Cursor **head, Cursor **tail, int data);
 int traversing_function();
+int editt();
+int searchh(int callcount);
+
 #endif
