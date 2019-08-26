@@ -57,4 +57,5 @@ int add_contact(contact_info **contacts, int size, addressbook *);
 int save_contact(addressbook *, int);
 void list_contact(void);
 int insert_last(Cursor **head, Cursor **tail, int data);
+int traversing_function();
 #endif
