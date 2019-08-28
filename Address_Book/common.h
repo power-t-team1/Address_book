@@ -60,5 +60,7 @@ int insert_last(Cursor **head, Cursor **tail, int data);
 int traversing_function();
 int editt();
 int searchh(int callcount);
-
+int edit_contact(char *changes, int location, int flag);
+int search_contact(FILE * f1, char *serch_name);
+int display_m_names(Cursor *head);
 #endif

@@ -4,9 +4,10 @@ int flag = 0;
 
 int main()
 {
-	char selection;
-	int ch;
-	//Declaring structure of addressbook, array of contacts
+	//SD
+	char selection, search_name[10], change_details[20];
+	int ch, choice, location;
+		//Declaring structure of addressbook, array of contacts
 	addressbook book;
 	contact_info *contacts;
 	//Reading the number of contacts already present in the file
@@ -77,7 +78,33 @@ int main()
 				break;
 			case 3:
 				{
-					editt();
+					//editt();
+					printf("Enter the name of the contact: ");
+					scanf("%s", search_name);
+					location = search_contact(book.fp, search_name);
+					printf("Select the option for change:\n1.Change name\n2.Change phone number\n3.Chnage email address\n ");
+					scanf("%d", &choice);
+					switch (choice)
+					{
+						case 1:
+								printf("Enter the new name: ");
+								scanf("%s", change_details);
+								edit_contact(change_details, location, 0);
+								break;
+						case 2: 
+								printf("Enter the new phone number: ");
+								scanf("%s", change_details);
+								edit_contact(change_details, location, 1);
+								break;
+						case 3: 
+								printf("Enter the new email address: ");
+								scanf("%s", change_details);
+								edit_contact(change_details, location, 2);
+								break;
+						default:
+								printf("Select the correct option\n");
+							
+					}
 				}
 				break;
 			case 4:

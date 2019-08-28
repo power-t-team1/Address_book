@@ -152,7 +152,10 @@ int traversing_function()
 
 		}
 	}
-
+	fclose(fp1);
+	fclose(fd);
+	fclose(ft);
+	fclose(fp);
 
 
 

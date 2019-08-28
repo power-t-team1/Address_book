@@ -1,5 +1,5 @@
 #include "common.h"
-int editt()
+int editt(int callcount)
 {
 	FILE *fp1 = fopen("Address_book.csv", "r");
 	FILE *fp = fopen("Address_book.csv", "r");
@@ -13,14 +13,28 @@ int editt()
 
 	//ask for options
 	int option;
-	printf("Edit the: \n1.Name\n2.Phone number\n3.Email\n4.Serial no\n");
-	scanf("%d", &option);
 
 	//Enter the key
 	char *key = malloc(33 * sizeof(char));
-	printf("Enter the key\n");
-	scanf("%s", key);
+	if(callcount == 0)
+	{
+		printf("Edit the: \n1.Name\n2.Phone number\n3.Email\n4.Serial no\n");
+		scanf("%d", &option);
+
+		printf("Enter the key\n");
+		scanf("%s", key);
+	}
+	else
+	{
+		printf("Enter serial number\n");
+		scanf("%s",key);
+		option = 4;
+	}
+	int len = strlen(key);
 	int tok = 1;
+	int flag;
+	int found = 0;
+	int firstLettrMatch = 0;
 	//fprintf(fd, "%s", key);
 	while((ch=fgetc(fp1)) != EOF)
 	{
@@ -50,11 +64,16 @@ int editt()
 				char *token4 = strtok(NULL,"\n");
 				//printf("t4 %s\n", token4);
 
-				int flag = 0;
+				flag = 0;
 				//keep printing lines till match 
 				switch(option)
 				{
 					case 1:
+						if((strncmp(token1, key, 1) == 0) && len == 1)
+						{
+							flag = 1;
+							firstLettrMatch = 1;
+						}
 						if(strcmp(token1, key) == 0)
 						{
 							//printf("match name\n");
@@ -87,15 +106,11 @@ int editt()
 					//printf("buff--->%s\n",buffer1);
 					//printf("xyz\n");
 					//fprintf(fd, "%s\n", buffer1);
-
-					//for(int i = 1; i < 4;i++)
-					{
-						//int tok = atoi(token4);
-						fprintf(fd, "%s,", token1);
-						fprintf(fd, "%s,", token2);
-						fprintf(fd, "%s,", token3);
-						fprintf(fd, "%d",  tok++);
-					}
+					fprintf(fd, "%s,", token1);
+					fprintf(fd, "%s,", token2);
+					fprintf(fd, "%s,", token3);
+					fprintf(fd, "%d",  tok++);
+				
 					fprintf(fd,"\n");
 					//fwrite(key, 1, dist, fd);
 					//printf("yzv\n");
@@ -107,20 +122,22 @@ int editt()
 					printf("%s,", token3);
 					printf("%d",  tok++);
 
+					printf("\n");
 					//printf("Enter the term to edit\n");
 
 					//printf("seeked\n");
 					//fseek(fp1,dist,SEEK_CUR);
+					found = 1;
 					flag = 0;
 				}
-
-
-
 		}
 	}
-
-
-
-
-
+	if(firstLettrMatch == 1)
+	{
+		searchh(1);
+	}
+	if(found == 0)
+	{
+		printf("Entry not in the list!!\n");
+	}
 }
